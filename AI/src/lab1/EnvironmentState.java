@@ -3,14 +3,18 @@ package lab1;
 import java.util.HashMap;
 import java.util.Map;
 
+import lab1.Environment.LocationState;
+
 
 public class EnvironmentState {
 	private Map<String, Environment.LocationState> state = new HashMap<String, Environment.LocationState>();
 	private String agentLocation = null;//
 
-	public EnvironmentState(Environment.LocationState locAState, Environment.LocationState locBState) {
+	public EnvironmentState(Environment.LocationState locAState, Environment.LocationState locBState, LocationState locCState, LocationState locDState) {
 		this.state.put(Environment.LOCATION_A, locAState);
 		this.state.put(Environment.LOCATION_B, locBState);
+		this.state.put(Environment.LOCATION_C, locBState);
+		this.state.put(Environment.LOCATION_D, locBState);
 	}
 
 	public void setAgentLocation(String location) {
