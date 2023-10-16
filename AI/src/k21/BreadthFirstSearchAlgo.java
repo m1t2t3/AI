@@ -1,133 +1,122 @@
 package k21;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Set;
 import java.util.List;
 
 public class BreadthFirstSearchAlgo implements ISearchAlgo {
 	
     @Override
     public Node execute(Node root, String goal) {
-        Queue<Node> frontier = new LinkedList<Node>();
+        Queue<Node> frontier = new LinkedList<>();
         frontier.add(root);
-        List<Node> explored = new ArrayList<Node> ();
+        Set<Node> explored = new HashSet<>();
         while (!frontier.isEmpty()) {
-            Node currentNode = frontier.poll();
-
-            if (currentNode.getLabel().equals(goal)) {
-                return currentNode;
-            }
-            else 
-            { 
-            	explored.add(currentNode);
-            }
-            List<Node> children = currentNode.getChildrenNodes();
-       
-            for (Node child : children) {
-                if (!explored.contains(child) && !frontier.contains(child)) {
-                    child.setParent(currentNode);
-                    frontier.add(child);
+            Node current = frontier.poll();
+            if(current.getLabel().equals(goal)) {
+                return current;
+            } else {
+                explored.add(current);
+                List<Node> childNode = current.getChildrenNodes();
+                for(Node child : childNode) {
+                    if(!frontier.contains(child) && !explored.contains(child)) {
+                        frontier.add(child);
+                        child.setParent(current);
+                    }
                 }
             }
         }
-
         return null;
     }
-    
+
     @Override
     public Node execute(Node root, String start, String goal) {
         Queue<Node> frontier = new LinkedList<>();
-        List<Node> explored = new ArrayList<>();
         frontier.add(root);
-        boolean started = false; // Initialize the started flag
-
+        Set<Node> explored = new HashSet<>();
+        boolean started =false;
         while (!frontier.isEmpty()) {
-            Node currentNode = frontier.poll();
-
-            if (currentNode.getLabel().equals(goal)) {
-                return currentNode;
+            Node current = frontier.poll();
+            if(current.getLabel().equals(start)) {
+                started = true;
+                current.setParent(null);
             }
-            else { 
-            	explored.add(currentNode);
-            }
-      
-
-            List<Node> children = currentNode.getChildrenNodes();
-
-            for (Node child : children) {
-                if (!explored.contains(child) && !frontier.contains(child)) {
-                    child.setParent(currentNode);
-                    frontier.add(child);
+            if(current.getLabel().equals(goal)) {
+                return current;
+            } else {
+                if(started) {
+                    started = false;
+                    explored.clear();
+                    frontier.clear();
+                }
+                explored.add(current);
+                List<Node> childNode = current.getChildrenNodes();
+                List<Edge> childEdge = current.getChildren();
+                for(Node child : childNode) {
+                    if(!frontier.contains(child) && !explored.contains(child)) {
+                       frontier.add(child);
+                       child.setParent(current);
+                   }
                 }
             }
-
-            // Check if the current node is the start node
-            if (currentNode.getLabel().equals(start)&& started) {
-                // Mark that we've started the search
-            	return currentNode;
-            } 
-            else { 
-            	  
-                       explored.clear();
-                       frontier.clear();
-                       currentNode.setParent(null);
-            }
         }
-
         return null;
     }
+
     
-    //task 3 
-    @Override
-	public Node execute(Node root, String goal) {
-		// TODO Auto-generated method stub
-		Queue<Node> frontier = new LinkedList<Node>();
-		frontier.add(root);
-
-		while (!frontier.isEmpty()) {
-			Node currentNode = frontier.poll();
-			if (currentNode.getLabel().equals(goal))
-				return currentNode;
-
-			List<Edge> edges = currentNode.getChildren();
-			for (Edge edge : edges) {
-				Node childNode = (Node) edge.getEnd().clone();
-				childNode.setParent(currentNode);
-				childNode.setPathCost(currentNode.getPathCost() + edge.getWeight());
-				frontier.add(childNode);
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public Node execute(Node root, String start, String goal) {
-		// TODO Auto-generated method stub
-		Queue<Node> frontier = new LinkedList<Node>();
-		frontier.add(root);
-
-		while (!frontier.isEmpty()) {
-			Node currentNode = frontier.poll();
-			if (currentNode.getLabel().equals(goal))
-				return currentNode;
-
-			if (currentNode.getLabel().equals(start)) {
-				frontier.clear();
-				currentNode.setParent(null);
-				currentNode.setPathCost(0);
-			}
-
-			List<Edge> edges = currentNode.getChildren();
-			for (Edge edge : edges) {
-				Node childNode = (Node) edge.getEnd().clone();
-				childNode.setParent(currentNode);
-				childNode.setPathCost(currentNode.getPathCost() + edge.getWeight());
-				frontier.add(childNode);
-			}
-	}
-		return null;
-}
+//    //task 3 ( tree search)
+//    @Override
+//	public Node execute(Node root, String goal) {
+//		// TODO Auto-generated method stub
+//		Queue<Node> frontier = new LinkedList<Node>();
+//		frontier.add(root);
+//
+//		while (!frontier.isEmpty()) {
+//			Node currentNode = frontier.poll();
+//			if (currentNode.getLabel().equals(goal))
+//				return currentNode;
+//
+//			List<Edge> edges = currentNode.getChildren();
+//			for (Edge edge : edges) {
+//				Node childNode = (Node) edge.getEnd().clone();
+//				childNode.setParent(currentNode);
+//				childNode.setPathCost(currentNode.getPathCost() + edge.getWeight());
+//				frontier.add(childNode);
+//			}
+//		}
+//		return null;
+//	}
+//
+//	@Override
+//	public Node execute(Node root, String start, String goal) {
+//		// TODO Auto-generated method stub
+//		Queue<Node> frontier = new LinkedList<Node>();
+//		frontier.add(root);
+//
+//		while (!frontier.isEmpty()) {
+//			Node currentNode = frontier.poll();
+//			if (currentNode.getLabel().equals(goal))
+//				return currentNode;
+//
+//			if (currentNode.getLabel().equals(start)) {
+//				frontier.clear();
+//				currentNode.setParent(null);
+//				currentNode.setPathCost(0);
+//			}
+//
+//			List<Edge> edges = currentNode.getChildren();
+//			for (Edge edge : edges) {
+//				Node childNode = (Node) edge.getEnd().clone();
+//				childNode.setParent(currentNode);
+//				childNode.setPathCost(currentNode.getPathCost() + edge.getWeight());
+//				frontier.add(childNode);
+//			}
+//	}
+//		return null;
+//}
     public static void main(String[] args) {
         // Create nodes and add edges as described in your example
     	Node nodeS = new Node("S");
@@ -159,6 +148,12 @@ public class BreadthFirstSearchAlgo implements ISearchAlgo {
         System.out.println("Path from A to G: " + path2);
 
     }
+
+	@Override
+	public Node execute(Node root, String goal, int limitedDepth) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	
 }
