@@ -1,4 +1,4 @@
-	package student;
+	package lab4_student;
 
 import java.util.ArrayList;
 import java.util.List;

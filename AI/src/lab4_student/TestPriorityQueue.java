@@ -1,4 +1,4 @@
-package student;
+package lab4_student;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;

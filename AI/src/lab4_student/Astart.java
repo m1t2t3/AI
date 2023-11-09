@@ -1,14 +1,13 @@
-package student;
+package lab4_student;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 
-public class Greedy implements IInformedSearchAlgo{
-
+public class Astart implements IInformedSearchAlgo{
     @Override
-    public Node execute(Node root, String goal)  {
-        PriorityQueue<Node> frontier  = new PriorityQueue<>(new NodeComparator());
+    public Node execute(Node root, String goal) {
+        PriorityQueue<Node> frontier  = new PriorityQueue<>(new NodeComparator1());
         frontier.add(root);
         List<Node> explored = new ArrayList<>();
         while (!frontier.isEmpty()) {
@@ -21,12 +20,15 @@ public class Greedy implements IInformedSearchAlgo{
                 for (Edge child : childEdges) {
                     Node n = child.getEnd();
                     if(!explored.contains(n) || frontier.contains(n)) {
+                        n.setG(current.getG()+ child.getWeight());
                         frontier.add(n);
                         n.setParent(current);
 
-                    } else if(frontier.contains(n) && n.getH() > (current.getH()) ) {
-
+                    } else if(frontier.contains(n) && n.getH() > (current.getH() + child.getWeight()) ) {
+                        frontier.remove(n);
+                        n.setG(current.getH() + child.getWeight());
                         n.setParent(current);
+                        frontier.add(n);
                     }
                 }
             }
