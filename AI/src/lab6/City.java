@@ -1,4 +1,4 @@
-package sa_tsp;
+package lab6;
 
 public class City {
 	private int x;

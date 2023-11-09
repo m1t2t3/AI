@@ -1,4 +1,4 @@
-package sa_tsp;
+package lab6;
 
 import java.util.ArrayList;
 import java.util.Collections;

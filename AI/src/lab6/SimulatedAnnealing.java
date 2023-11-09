@@ -1,4 +1,4 @@
-package sa_tsp;
+package lab6;
 
 public class SimulatedAnnealing {
 	public static double simulateAnnealing(double startingTemperature, int numberOfIterations, double coolingRate) {

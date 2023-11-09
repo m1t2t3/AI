@@ -1,4 +1,4 @@
-package n_queen.student;
+package lab6;
 
 public class Queen {
 	private int row;
@@ -11,13 +11,14 @@ public class Queen {
 	}
 
 	public void move() {
-		// Enter your code here
+		if (row < Node.N - 1) {
+            row++;
+        }
 	}
-
+//task1
 	// check whether this Queen can attack the given Queen (q)
 	public boolean isConflict(Queen q) {
-		// Enter your code here
-		return false;
+        return (row == q.row || column == q.column || Math.abs(row - q.row) == Math.abs(column - q.column));
 	}
 
 	public int getRow() {
