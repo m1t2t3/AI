@@ -9,14 +9,16 @@ public class Queen {
 		this.row = row;
 		this.column = column;
 	}
-
+	//task1
 	public void move() {
 		if (row < Node.N - 1) {
             row++;
         }
+		if (row ==Node.N) {
+			row =0;
+		}
 	}
 //task1
-	// check whether this Queen can attack the given Queen (q)
 	public boolean isConflict(Queen q) {
         return (row == q.row || column == q.column || Math.abs(row - q.row) == Math.abs(column - q.column));
 	}

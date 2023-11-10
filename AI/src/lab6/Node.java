@@ -50,22 +50,29 @@ public class Node {
     }
 //task2
     public List<Node> generateAllCandidates() {
+//        List<Node> result = new ArrayList<Node>();
+//
+//        for (int i = 0; i < N; i++) {
+//            for (int j = 0; j < N; j++) {
+//                if (j != state[i].getColumn()) {
+//                    // Create a copy of the current state and move the queen to a new column
+//                    Queen[] newState = new Queen[N];
+//                    for (int k = 0; k < N; k++) {
+//                        newState[k] = new Queen(state[k].getRow(), state[k].getColumn());
+//                    }
+//                    newState[i].setRow(j);
+//                    result.add(new Node(newState));
+//                }
+//            }
+//        }
+//        return result;
         List<Node> result = new ArrayList<Node>();
-
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                if (j != state[i].getColumn()) {
-                    // Create a copy of the current state and move the queen to a new column
-                    Queen[] newState = new Queen[N];
-                    for (int k = 0; k < N; k++) {
-                        newState[k] = new Queen(state[k].getRow(), state[k].getColumn());
-                    }
-                    newState[i].setRow(j);
-                    result.add(new Node(newState));
-                }
-            }
-        }
-        return result;
+		for (int i = 0; i < N; i++) {
+			Node n = new Node(this.state);
+			n.state[i].move();
+			result.add(n);
+		}
+		return result;
     }
 // task4
     public Node selectNextRandomCandidate(double temperature) {
@@ -124,34 +131,29 @@ public class Node {
 	            }
 
 	            if (bestNeighbor.getH() >= current.getH()) {
-	                // Hill climbing reached a peak, no better solution found
 	                break;
 	            }
-
 	            current = bestNeighbor;
 	        }
-
 	        return current;
 	    }
 	
 	 public Node executeHillClimbingWithRandomRestart(Node initialState) {
 	        Node bestSolution = null;
-	        int maxRestarts = 100; // You can adjust the number of random restarts as needed
+	        int maxRestarts = 100; 
 
 	        while (maxRestarts > 0) {
 	            Node solution = execute(initialState);
 
 	            if (solution.getH() == 0) {
-	                // Solution found
 	                return solution;
 	            }
 
-	            // Random Restart
 	            initialState.generateBoard();
 	            maxRestarts--;
 	        }
 
-	        return bestSolution; // If no solution found after all restarts
+	        return bestSolution;
 	    }
 
 }
