@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Node {
 	private List<Integer> data = new ArrayList<Integer>();
+    private int move; // Added field to track the move
 
 	public void add(Integer val) {
 		this.data.add(val);
@@ -58,7 +59,13 @@ public class Node {
 			return o2.compareTo(o1);
 		}
 	};
+	 public void setMove(int move1, int move2) {
+	        this.move = move1 * 10 + move2; // Combine move1 and move2 into a single integer for simplicity
+	    }
 
+	    public int getMove() {
+	        return this.move;
+	    }
 	@Override
 	public boolean equals(Object obj) {
 	    if (this == obj) {
