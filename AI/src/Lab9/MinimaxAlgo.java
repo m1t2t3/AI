@@ -1,12 +1,12 @@
 package Lab9;
 
 public class MinimaxAlgo {
-	 private int bestMove;
+	 public int bestMove;
 	 
 	 public void execute(Node node) {
-	        int v = maxValue(node);
-	        System.out.println("Optimal Value at root node: " + v);
-	        System.out.println("Best Move for MIN player: " + bestMove);
+		 int v = minValue(node);
+	        System.out.println("Minimax Value: " + v);
+	        System.out.println("Best Move: " + bestMove);
 	    }
 	// function MAX-VALUE(state) returns a utility value
 	// if TERMINAL-TEST(state) then return UTILITY(state)
@@ -14,9 +14,9 @@ public class MinimaxAlgo {
 	// for each s in SUCCESSORS(state) do
 	// v <- MAX(v, MIN-VALUE(s))
 	// return v
-	 private int maxValue(Node node) {
+	 public int maxValue(Node node) {
 	        if (isTerminal(node)) {
-	            return utility(node);
+	            return 1;
 	        }
 
 	        int v = Integer.MIN_VALUE;
@@ -35,9 +35,9 @@ public class MinimaxAlgo {
 	// for each s in SUCCESSORS(state) do
 	// v <- MIN(v, MAX-VALUE(s))
 	// return v
-	 private int minValue(Node node) {
+	 public int minValue(Node node) {
 	        if (isTerminal(node)) {
-	            return utility(node);
+	            return 0;
 	        }
 
 	        int v = Integer.MAX_VALUE;
@@ -50,11 +50,8 @@ public class MinimaxAlgo {
 	        }
 	        return v;
 	    }
-	private boolean isTerminal(Node node) {
+	public boolean isTerminal(Node node) {
         return node.isTerminal();
     }
-	private int utility(Node node) {
-        // Assign values based on the outcome of the game
-        return (node.isTerminal()) ? 1 : 0;
-    }
+
 }

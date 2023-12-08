@@ -16,40 +16,41 @@ public class Node {
 	public void addAll(List<Integer> data) {
 		this.data.addAll(data);
 	}
-
+// task2
 	// Get children of the current node
     public List<Node> getSuccessors() {
-        List<Node> successors = new ArrayList<>();
+    	data.sort(DESCOMPARATOR);       
+    	List<Node> successors = new ArrayList<>();
 
         for (int i = 0; i < data.size(); i++) {
-            for (int j = i + 1; j < data.size(); j++) {
-                // Generate successors by dividing the pile into two non-empty piles
-                List<Integer> childData = new ArrayList<>(data);
-                int pile1 = childData.remove(j);
-                int pile2 = childData.remove(i);
-                childData.add(pile1 + pile2);
+        	int count = data.get(i);
+            for (int j = 1; j <= count/2; j++) {
+            	if (j!= (count - j)) {
+            		Node n = new Node();
+            		n.add(j);
+            		n.add(count - j);
+            		for (int k = 0; k < data.size(); k++) {
+						if(k!=i) {
+							n.add(data.get(k));
+						}
+					}
+            		  successors.add(n);
+            	}
 
-                Node childNode = new Node();
-                childNode.addAll(childData);
-
-                // Check if the successor is not identical to any existing successor
-                if (!successors.contains(childNode)) {
-                    successors.add(childNode);
-                }
             }
         }
 
         return successors;
     }
-
+// task1
 	  public boolean isTerminal() {
-	        // A node is terminal if the tokens of each pile cannot be divided
+	        
 	        for (int tokens : data) {
 	            if (tokens > 1) {
-	                return false; // If there is any pile with more than one token, it can be divided
+	                return false; 
 	            }
 	        }
-	        return true; // All piles have one or zero tokens, so cannot be divided further
+	        return true; 
 	    }
 
 	public static final Comparator<Integer> DESCOMPARATOR = new Comparator<Integer>() {
